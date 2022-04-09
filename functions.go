@@ -6,5 +6,5 @@ func LoadImages() {
 	router.StaticFile("/divyansh.jpeg", "./front/images/divyansh.jpeg")
 	router.StaticFile("/tesla.jpeg", "./front/images/tesla.jpeg")
 	router.StaticFile("/conf.jpeg", "./front/images/CONFESSION.jpeg")
-	router.StaticFile("/meme.jpeg", "/front/images/meme.jpeg")
+	router.StaticFile("/meme.jpeg", "./front/images/meme.jpeg")
 }
