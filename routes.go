@@ -12,6 +12,7 @@ func LoadRoutes() {
 	router.GET("/confessions", ConfessionHome)
 	router.GET("/confessions/:id", SubmitConfession)
 	router.GET("/team", Teams)
+	router.GET("/thankyou", Thankyou)
 }
 
 func Home(c *gin.Context) {
@@ -52,6 +53,16 @@ func Teams(c *gin.Context) {
 		"team.html",
 		gin.H{
 			"title": "Our Team",
+		},
+	)
+}
+
+func Thankyou(c *gin.Context) {
+	c.HTML(
+		http.StatusOK,
+		"thankyou.html",
+		gin.H{
+			"title": "Thank You",
 		},
 	)
 }
