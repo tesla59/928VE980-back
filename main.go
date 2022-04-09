@@ -11,6 +11,9 @@ func main() {
 	// Load default configs
 	router = gin.Default()
 
+	// Load all HTMLs
+	router.LoadHTMLGlob("front/*.html")
+
 	// Setup routers
 	LoadRoutes()
 
