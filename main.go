@@ -14,6 +14,9 @@ func main() {
 	// Load all HTMLs
 	router.LoadHTMLGlob("front/*.html")
 
+	// Load all images
+	LoadImages()
+
 	// Setup routers
 	LoadRoutes()
 
