@@ -1,6 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"io"
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"github.com/rs/xid"
 
@@ -13,6 +17,7 @@ func LoadRoutes() {
 	router.GET("/confessions/:id", SubmitConfession)
 	router.GET("/team", Teams)
 	router.POST("/thankyou/:id", POSTConfession)
+	router.GET("/memes", Memes)
 }
 
 func Home(c *gin.Context) {
@@ -79,6 +84,29 @@ func POSTConfession(c *gin.Context) {
 		"thankyou.html",
 		gin.H{
 			"title": "Thank You",
+		},
+	)
+}
+
+func Memes(c *gin.Context) {
+	// make GET request
+	response, Err := http.Get("https://meme-api.herokuapp.com/gimme")
+	if Err != nil {
+		log.Println(Err)
+	}
+
+	body, _ := io.ReadAll(response.Body)
+	response.Body.Close()
+
+	var redd Reddit
+	Err = json.Unmarshal(body, &redd)
+
+	c.HTML(
+		http.StatusOK,
+		"meme_display.html",
+		gin.H{
+			"title": "Dank Maymay",
+			"meme":  redd.URL,
 		},
 	)
 }
