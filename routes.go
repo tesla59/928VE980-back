@@ -119,6 +119,9 @@ func DisplayConfession(c *gin.Context) {
 		if Confessions[i].By == "" {
 			Confessions[i].By = "Anonymous"
 		}
+		if Confessions[i].To == "" {
+			Confessions[i].To = "IYKYK"
+		}
 	}
 	c.HTML(
 		http.StatusOK,
