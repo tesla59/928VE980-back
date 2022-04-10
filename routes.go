@@ -115,6 +115,11 @@ func Memes(c *gin.Context) {
 func DisplayConfession(c *gin.Context) {
 	DB.Model(&Confession{}).Count(&Count)
 	DB.Limit(6).Offset(int(Count) - 6).Find(&Confessions)
+	for i := range Confessions {
+		if Confessions[i].By == "" {
+			Confessions[i].By = "Anonymous"
+		}
+	}
 	c.HTML(
 		http.StatusOK,
 		"confession_display.html",
