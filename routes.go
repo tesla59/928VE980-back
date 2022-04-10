@@ -18,6 +18,7 @@ func LoadRoutes() {
 	router.GET("/team", Teams)
 	router.POST("/thankyou/:id", POSTConfession)
 	router.GET("/memes", Memes)
+	router.GET("/show", DisplayConfession)
 }
 
 func Home(c *gin.Context) {
@@ -107,6 +108,36 @@ func Memes(c *gin.Context) {
 		gin.H{
 			"title": "Dank Maymay",
 			"meme":  redd.URL,
+		},
+	)
+}
+
+func DisplayConfession(c *gin.Context) {
+	DB.Limit(6).Find(&Confessions)
+	log.Println(Confessions)
+	c.HTML(
+		http.StatusOK,
+		"confession_display.html",
+		gin.H{
+			"title": "Confessions",
+			"f1":    Confessions[0].To,
+			"b1":    Confessions[0].By,
+			"m1":    Confessions[0].Message,
+			"f2":    Confessions[1].To,
+			"b2":    Confessions[1].By,
+			"m2":    Confessions[1].Message,
+			"f3":    Confessions[2].To,
+			"b3":    Confessions[2].By,
+			"m3":    Confessions[2].Message,
+			"f4":    Confessions[3].To,
+			"b4":    Confessions[3].By,
+			"m4":    Confessions[3].Message,
+			"f5":    Confessions[4].To,
+			"b5":    Confessions[4].By,
+			"m5":    Confessions[4].Message,
+			"f6":    Confessions[5].To,
+			"b6":    Confessions[5].By,
+			"m6":    Confessions[5].Message,
 		},
 	)
 }
