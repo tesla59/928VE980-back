@@ -9,6 +9,7 @@ var router *gin.Engine
 var DB *gorm.DB
 var Err error
 var Confessions []Confession
+var Count int64
 
 func main() {
 
