@@ -12,7 +12,7 @@ func LoadRoutes() {
 	router.GET("/confessions", ConfessionHome)
 	router.GET("/confessions/:id", SubmitConfession)
 	router.GET("/team", Teams)
-	router.GET("/thankyou", Thankyou)
+	router.POST("/thankyou/:id", POSTConfession)
 }
 
 func Home(c *gin.Context) {
@@ -38,11 +38,13 @@ func ConfessionHome(c *gin.Context) {
 }
 
 func SubmitConfession(c *gin.Context) {
+	ID := c.Param("id")
 	c.HTML(
 		http.StatusOK,
 		"submit.html",
 		gin.H{
 			"title": "Confession page",
+			"ID":    ID,
 		},
 	)
 }
@@ -57,7 +59,21 @@ func Teams(c *gin.Context) {
 	)
 }
 
-func Thankyou(c *gin.Context) {
+func POSTConfession(c *gin.Context) {
+	// Migrate the schema
+	DB.AutoMigrate(&Confession{})
+
+	cnfs := Confession{
+		ID:       c.Param("id"),
+		To:       c.PostForm("to"),
+		By:       c.PostForm("name"),
+		Message:  c.PostForm("message"),
+		SenderIP: c.ClientIP(),
+		Posted:   false,
+	}
+
+	DB.Create(&cnfs)
+
 	c.HTML(
 		http.StatusOK,
 		"thankyou.html",

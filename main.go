@@ -2,9 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 var router *gin.Engine
+var DB *gorm.DB
+var Err error
 
 func main() {
 
@@ -16,6 +19,9 @@ func main() {
 
 	// Load all images
 	LoadImages()
+
+	// Connect to DB
+	ConnectDB()
 
 	// Setup routers
 	LoadRoutes()
